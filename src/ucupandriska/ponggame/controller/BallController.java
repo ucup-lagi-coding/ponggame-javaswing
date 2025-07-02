@@ -37,7 +37,8 @@ public class BallController {
     private static final Clip bounceClip = AudioLoader.loadClip("/resource/audio/bounce.wav");
     private static final Clip goalClip = AudioLoader.loadClip("/resource/audio/goal.wav");
 
-    public BallController(GameWindow window, RotatingImageObject rect, Rect leftPaddle, Rect rightPaddle, Text playerOneScoreText, Text playerTwoScoreText) {
+    public BallController(GameWindow window, RotatingImageObject rect, Rect leftPaddle, Rect rightPaddle,
+            Text playerOneScoreText, Text playerTwoScoreText) {
         this.window = window; // Initialize GameWindow reference
         this.rect = rect;
         this.leftPaddle = leftPaddle;
@@ -50,7 +51,7 @@ public class BallController {
         this.timer = new Countdown(3);
         this.timer.start();
 
-        this.ballTrail = new BallTrail((int)ballSpeed/25, ColorScheme.SCORE);
+        this.ballTrail = new BallTrail((int) ballSpeed / 25, ColorScheme.SCORE);
 
         initialMove();
     }
@@ -87,13 +88,13 @@ public class BallController {
 
         double nextX = rect.x + vx * dt;
         double nextY = rect.y + vy * dt;
- 
+
         // Left paddle collision
         if (vx < 0 &&
-            rect.x <= leftPaddle.x + leftPaddle.width &&
-            rect.x + rect.width >= leftPaddle.x &&
-            rect.y + rect.height >= leftPaddle.y &&
-            rect.y <= leftPaddle.y + leftPaddle.height) {
+                rect.x <= leftPaddle.x + leftPaddle.width &&
+                rect.x + rect.width >= leftPaddle.x &&
+                rect.y + rect.height >= leftPaddle.y &&
+                rect.y <= leftPaddle.y + leftPaddle.height) {
 
             double ballCenterY = rect.y + rect.height / 2;
             double paddleCenterY = leftPaddle.y + leftPaddle.height / 2;
@@ -109,10 +110,10 @@ public class BallController {
 
         // Right paddle collision
         if (vx > 0 &&
-            rect.x + rect.width >= rightPaddle.x &&
-            rect.x <= rightPaddle.x + rightPaddle.width &&
-            rect.y + rect.height >= rightPaddle.y &&
-            rect.y <= rightPaddle.y + rightPaddle.height) {
+                rect.x + rect.width >= rightPaddle.x &&
+                rect.x <= rightPaddle.x + rightPaddle.width &&
+                rect.y + rect.height >= rightPaddle.y &&
+                rect.y <= rightPaddle.y + rightPaddle.height) {
 
             double ballCenterY = rect.y + rect.height / 2;
             double paddleCenterY = rightPaddle.y + rightPaddle.height / 2;
@@ -152,7 +153,7 @@ public class BallController {
     // Modified score method to include winner checking
     private void score(Text scoreText, String scorerName) {
         addScore(scoreText);
-        
+
         // Check for win condition after score is added
         if (Integer.parseInt(playerOneScoreText.text) >= Const.SCORE_TO_WIN) {
             gameOver = true; // Set game over flag
@@ -212,5 +213,21 @@ public class BallController {
 
     public BallTrail getBallTrail() {
         return ballTrail;
+    }
+
+    public double getVX() {
+        return vx;
+    }
+
+    public double getVY() {
+        return vy;
+    }
+
+    public void setVX(double vx) {
+        this.vx = vx;
+    }
+
+    public void setVY(double vy) {
+        this.vy = vy;
     }
 }
